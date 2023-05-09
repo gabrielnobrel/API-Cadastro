@@ -1,3 +1,4 @@
+require("dotenv/config");
 require("express-async-errors");
 
 const migrationsRun = require("./database/sqlite/migrations"); //Importando SQlite
@@ -35,5 +36,5 @@ app.use((error, request, response, next) => {
 });
 
 //ACESSO DE PORTA
-const PORT = 3333;
+const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => console.log(`Server is running on Port ${PORT}`)); //Chamando a porta e enviando uma mensagem
