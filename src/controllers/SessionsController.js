@@ -1,7 +1,7 @@
 const knex = require("../database/knex"); //conexão com o banco de dados
 const AppError = require("../utills/AppError"); //mensagem de error
 const { compare } = require("bcryptjs"); //comparador de senhas
-const authConfig = require("../configs/auth");
+const authConfig = require("..//auth");
 const { sign } = require("jsonwebtoken");
 
 class SessionsController {
