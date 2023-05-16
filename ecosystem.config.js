@@ -2,10 +2,9 @@ module.exports = {
   apps: [
     {
       name: "app",
-      script: "./src/server.js",
-      instances: "max",
+      script: "pm2-runtime ./src/server.js",
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: "development",
       },
       env_production: {
         NODE_ENV: "production",
