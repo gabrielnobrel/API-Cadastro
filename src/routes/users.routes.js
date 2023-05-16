@@ -1,5 +1,6 @@
 const { Router, request, response } = require("express");
 const multer = require("multer");
+//Aqui o arquivo setado
 const uploadConfig = require("../configs/upload");
 
 const UsersControllers = require("../controllers/UsersControllers");
