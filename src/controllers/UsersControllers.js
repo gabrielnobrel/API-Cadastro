@@ -1,33 +1,18 @@
 const { hash, compare } = require("bcryptjs"); //Pacote para criptografar a senha e de comparação
 const AppError = require("../utills/AppError");
+
+const UserRepository = require("../repositories/UserRepository");
 const sqliteConnection = require("../database/sqlite"); //se conectar ao banco de dados
+const UserCreateService = require("../services/UserCreateService");
 
 class UsersControllers {
   //CRIAR UM USUÁRIO
   async create(request, response) {
     const { name, email, password } = request.body;
 
-    const database = await sqliteConnection(); //Se conectar com a base de dados
-
-    //VERIFICAR SE O EMAIL EXISTE
-    const checkUserExists = await database.get(
-      //"get" porque quero buscar por informações
-      "SELECT * FROM users WHERE email = (?)",
-      [email]
-    );
-
-    if (checkUserExists) {
-      throw new AppError("Este email já está em uso.");
-    }
-
-    // CRIPTGRAFAR A SENHA DO USUÁRIO
-    const hashedPassword = await hash(password, 8); //o "8" se refere ao fator de complexidade do hash
-
-    //Onde quero inserir as informações
-    await database.run(
-      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashedPassword]
-    );
+    const userRepository = new UserRepository();
+    const userCreateService = new UserCreateService(userRepository);
+    await userCreateService.execute({ name, email, password });
 
     return response.status(201).json(); //retorno para o cliente
   }
